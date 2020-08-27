@@ -10,11 +10,17 @@ document.getElementById("app").innerHTML = `
 `;
 
 console.log(getSyncData());
-console.log(getAsyncData(resultHandler));
+console.log(getAsyncData(errorHandlerCallBack,resultHandler));
 console.log('st 3');
 
 function resultHandler(data){
   console.log('response', data);
+}
+
+function errorHandlerCallBack(error){
+
+  console.log('Error from Async Function:',error.message);
+
 }
 
 function getSyncData(){
@@ -22,8 +28,14 @@ function getSyncData(){
   return 'Sync Data';
 }
 
-function getAsyncData(callback){
+function getAsyncData(errorHandlerCallBack,callback){
+
+  const returnError = true;
   setTimeout(() => {
+    if(returnError){
+      errorHandlerCallBack( new Error('Error Occurred'))
+    } else{
     callback('async data')
+    }
   }, 3000);
 }
