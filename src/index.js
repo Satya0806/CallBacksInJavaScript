@@ -10,7 +10,16 @@ document.getElementById("app").innerHTML = `
 `;
 
 console.log(getSyncData());
-console.log(getAsyncData(errorHandlerCallBack,resultHandler));
+
+getDataUsingPromise().then(
+  (data) => {
+    console.log('resolve::'+data);
+  },
+  (rejectReason) => {
+    console.log('reject:::'+rejectReason)
+  }
+);
+
 console.log('st 3');
 
 function resultHandler(data){
@@ -28,14 +37,20 @@ function getSyncData(){
   return 'Sync Data';
 }
 
-function getAsyncData(errorHandlerCallBack,callback){
+function getDataUsingPromise(){
 
-  const returnError = true;
+  const shouldReject = Math.round(Math.random())
+
+return new Promise((resolve, reject) => {
   setTimeout(() => {
-    if(returnError){
-      errorHandlerCallBack( new Error('Error Occurred'))
-    } else{
-    callback('async data')
+    if(shouldReject){
+
+       reject('Promise could not be fulfilled!!!')
+    }else{
+
+    resolve('Promise is fulfilled')
     }
   }, 3000);
+});
+
 }
