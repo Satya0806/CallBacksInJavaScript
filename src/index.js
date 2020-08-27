@@ -9,48 +9,69 @@ document.getElementById("app").innerHTML = `
 </div>
 `;
 
-console.log(getSyncData());
 
-getDataUsingPromise().then(
-  (data) => {
-    console.log('resolve::'+data);
-  },
-  (rejectReason) => {
-    console.log('reject:::'+rejectReason)
-  }
+getUserId().then(
+      (userId) => {
+        console.log(userId);
+        getUserDetails(userId).then(
+
+          (userDetails) =>{
+            console.log(userDetails);
+          },
+          (rejectedReason) =>{
+            console.log(rejectedReason)
+          }
+
+        );
+      },
+      (rejectReason) => {
+        console.log(rejectReason)
+      }
 );
 
-console.log('st 3');
+function getUserId(){
 
-function resultHandler(data){
-  console.log('response', data);
-}
+        const shouldReject = Math.round(Math.random());
 
-function errorHandlerCallBack(error){
+        const randomUserIndex = Math.round(Math.random())
 
-  console.log('Error from Async Function:',error.message);
+       return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  if(shouldReject){
 
-}
+                    reject('Promise to return userId could not be fulfilled!!!')
+                  }else{
 
-function getSyncData(){
-
-  return 'Sync Data';
-}
-
-function getDataUsingPromise(){
-
-  const shouldReject = Math.round(Math.random())
-
-return new Promise((resolve, reject) => {
-  setTimeout(() => {
-    if(shouldReject){
-
-       reject('Promise could not be fulfilled!!!')
-    }else{
-
-    resolve('Promise is fulfilled')
-    }
-  }, 3000);
-});
+                  resolve(randomUserIndex)
+                  }
+                }, 500);
+      });
 
 }
+
+function getUserDetails(userId){
+
+  const users = [
+
+    {name: 'Satya', phone: 3099128750},
+    {name: 'Sujatha', phone: 3095126215}
+
+  ]
+        const shouldReject = Math.round(Math.random);
+
+       return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  if(shouldReject){
+
+                    reject('Promise to return UserDetails could not be fulfilled')
+                  }else{
+
+                  resolve(users[userId])
+                  }
+                }, 500);
+      });
+
+}
+
+
+
