@@ -28,8 +28,25 @@ getUserId().then(
         console.log(rejectReason)
       }
 );
+//call to get Id and wait until it returns
+//use id to call userDetails 
 
-function getUserId(){
+const getAllTheData = async() =>{
+
+  let userId = await getUserId();
+
+  if(userId){
+   console.log(userId);
+   console.log(getUserDetails(userId))
+  }else{
+    console.log('User Id is not returned')
+  }
+
+}
+
+getAllTheData();
+
+ function getUserId(){
 
         const shouldReject = Math.round(Math.random());
 
